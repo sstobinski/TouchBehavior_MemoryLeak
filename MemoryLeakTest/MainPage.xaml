@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maui="clr-namespace:MemoryToolkit.Maui;assembly=MemoryToolkit.Maui"
+             x:Class="MemoryLeakTest.MainPage"
+             xmlns:vm="clr-namespace:MemoryLeakTest.Viewmodels"
+             x:DataType="vm:MainPageVM"
+             BackgroundColor="White"
+             maui:LeakMonitorBehavior.Cascade="True"
+             maui:TearDownBehavior.Cascade="True">
+    <VerticalStackLayout
+        BackgroundColor="White" 
+        Spacing="10" 
+        VerticalOptions="Center" 
+        HorizontalOptions="Center">
+        <Label Text="Main Page"
+               TextColor="Black"    
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center"/>
+        <Button
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Text="Go to TouchBehavior Page"
+            Command="{Binding GoToTouchBehaviorPageCommand}"/>
+        <Button
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Text="Go to GestureRecognizer Page"
+            Command="{Binding GoToGestureRecognizerPageCommand}"/>
+        <VerticalStackLayout
+            HorizontalOptions="Center"
+            Spacing="5"
+            BindableLayout.ItemsSource="{Binding MyTotalMemoryCollection}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding .}"
+                           TextColor="Black"/>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+        <Button
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Text="Clear List"
+            Command="{Binding ClearListCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

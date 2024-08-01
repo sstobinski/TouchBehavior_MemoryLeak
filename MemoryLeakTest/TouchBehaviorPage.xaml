@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:model="clr-namespace:MemoryLeakTest.MyModels"
+             xmlns:maui="clr-namespace:MemoryToolkit.Maui;assembly=MemoryToolkit.Maui"
+             x:Class="MemoryLeakTest.TouchBehaviorPage"
+             BackgroundColor="White"
+             maui:LeakMonitorBehavior.Cascade="True"
+             maui:TearDownBehavior.Cascade="True">
+    <ContentPage.Content>
+        <ScrollView>
+            <VerticalStackLayout Spacing="20">
+                <Label Text="TouchBehavior Page" BackgroundColor="Aqua" HeightRequest="60" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                       FontSize="20" TextColor="Black"/>
+                <VerticalStackLayout x:Name="MyStackLayout"
+                                     Padding="30,0"
+                                     Spacing="10"
+                                     BindableLayout.ItemsSource="{Binding DisplayList}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="model:Car">
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout 
+                                    HeightRequest="40"
+                                    Spacing="10" 
+                                    BackgroundColor="CornflowerBlue">
+                                    <HorizontalStackLayout.Behaviors>
+                                        <toolkit:TouchBehavior
+                                            Command="{Binding Path=BindingContext.MySingleCommand, Source={x:Reference MyStackLayout}}"
+                                            CommandParameter="{Binding .}"
+                                            LongPressCommand="{Binding Path=BindingContext.MyLongPressCommand, Source={x:Reference MyStackLayout}}"/>
+                                    </HorizontalStackLayout.Behaviors>
+                                    <Label Text="{Binding Brand}" TextColor="Black"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            <Button
+                VerticalOptions="Center"
+                x:Name="CounterBtn"
+                Text="Go back to Main Page"
+                BackgroundColor="MediumAquamarine"
+                HeightRequest="50"
+                WidthRequest="200"
+                Command="{Binding GoBackCommand}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
